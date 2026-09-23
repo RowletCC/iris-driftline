@@ -47,7 +47,7 @@ npm test
 
 The tests cover field allowlisting, task-history grouping, stable-key diffs, authentication/path handling with a mock IRIS server, and UI delivery.
 
-Live smoke test: against a disposable IRIS 2026.2 Community Edition container, the initial seven selected SysAdmin endpoints responded; the dashboard rendered 16 tasks, 22 upcoming entries, and no error-coded task history records. The five later operational-context endpoints are verified with a mock API but have not been re-tested against that live container. These counts describe only that local test instance, not a typical production system.
+Live smoke test: against a disposable IRIS 2026.2 Community Edition container, all 12 selected SysAdmin endpoints responded and a full capture returned no endpoint errors. The capture included 16 tasks, 22 upcoming entries, 35 processes, 75 audit-event records, and 3 journal-file records. These counts describe only that local test instance, not a typical production system.
 
 ## Contest disclosure
 
