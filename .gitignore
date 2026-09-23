@@ -1,0 +1,4 @@
+private/
+node_modules/
+sysadmin-api-specification.json
+.DS_Store

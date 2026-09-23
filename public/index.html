@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e141c">
+  <title>IRIS Driftline — Task reliability & change visibility</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail" aria-label="Navigation">
+      <div class="mark" aria-hidden="true"><i></i><i></i><i></i></div>
+      <span class="rail-word">DRIFTLINE</span>
+      <span class="rail-foot">IRIS / SYSADMIN</span>
+    </aside>
+    <main>
+      <header class="topbar">
+        <div class="eyebrow"><span class="live-dot"></span> INTERSYSTEMS IRIS · OPERATIONS WORKSPACE</div>
+        <div class="top-actions">
+          <span id="source" class="source">Not connected</span>
+          <button id="refresh" class="button button-primary" type="button">Capture live state <span aria-hidden="true">↗</span></button>
+        </div>
+      </header>
+      <section class="intro">
+        <div>
+          <p class="overline">A CLEARER VIEW OF WHAT CHANGED</p>
+          <h1>Find the drift.<br><em>Keep the rhythm.</em></h1>
+          <p class="lede">One focused view for scheduled tasks, failed runs, and configuration changes. Capture two moments and see what actually moved.</p>
+        </div>
+        <div class="capture-box">
+          <span class="capture-label">CURRENT CAPTURE</span>
+          <strong id="capture-time">Awaiting first capture</strong>
+          <span id="capture-status">Use the button above to read your IRIS instance.</span>
+        </div>
+      </section>
+      <section class="metric-grid" aria-label="Task metrics">
+        <article class="metric"><span>Scheduled tasks</span><strong id="task-count">—</strong><small>Tasks visible to this user</small></article>
+        <article class="metric"><span>Suspended</span><strong id="suspended-count">—</strong><small>Need an intentional review</small></article>
+        <article class="metric"><span>Upcoming · 48h</span><strong id="upcoming-count">—</strong><small>Forecast from IRIS</small></article>
+        <article class="metric metric-alert"><span>History signals</span><strong id="failure-count">—</strong><small>Non-success run results</small></article>
+      </section>
+      <section class="main-grid">
+        <div class="panel panel-wide">
+          <div class="panel-heading"><div><p class="overline">01 / SCHEDULE</p><h2>Task rhythm</h2></div><span id="manager-status" class="pill">Manager —</span></div>
+          <p class="panel-intro">The next 48 hours in the IRIS instance's clock, laid out from the scheduler's own data.</p>
+          <div id="schedule" class="schedule empty">Capture a live state to see upcoming work.</div>
+        </div>
+        <div class="panel panel-signal">
+          <div class="panel-heading"><div><p class="overline">02 / RELIABILITY</p><h2>Runs to revisit</h2></div><span class="signal-icon" aria-hidden="true">✳</span></div>
+          <p class="panel-intro">Groups tasks whose recent history includes a non-success result.</p>
+          <div id="failures" class="failure-list empty">No history loaded yet.</div>
+        </div>
+      </section>
+      <section class="panel compare-panel">
+        <div class="panel-heading"><div><p class="overline">03 / CHANGE REVIEW</p><h2>Between two moments</h2></div><span id="change-count" class="change-count">— changes</span></div>
+        <p class="panel-intro">Keep a baseline in this browser tab, capture again, and review changes to tasks, upcoming runs, web applications, and roles.</p>
+        <div class="inventory" aria-label="Instance context"><div><strong id="webapp-count">—</strong><span>Web applications</span></div><div><strong id="role-count">—</strong><span>Roles</span></div><div><strong id="resource-count">—</strong><span>Resource groups</span></div></div>
+        <div class="compare-actions">
+          <button id="baseline" class="button button-outline" type="button" disabled>Set current as baseline</button>
+          <button id="export" class="button button-outline" type="button" disabled>Export current JSON</button>
+          <label class="button button-outline import-button">Import baseline JSON<input id="import" type="file" accept="application/json,.json"></label>
+          <span id="baseline-time" class="baseline-time">No baseline set</span>
+        </div>
+        <div id="changes" class="changes empty">The change review will appear after two captures.</div>
+      </section>
+      <section class="fineprint"><span>READ-ONLY BY DESIGN</span><p>Driftline never runs, suspends, or edits a task. It keeps credentials on the local server and calls the official SysAdmin API from there. Captures stay in this browser tab unless you export them.</p></section>
+      <footer>IRIS DRIFTLINE <span>Built for the InterSystems Management Portal challenge · 2026</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
