@@ -16,7 +16,7 @@ test('capture reads official paths with Basic auth and isolates forbidden endpoi
     const result = await capture({ target: `http://127.0.0.1:${iris.address().port}`, user: '_SYSTEM', password: 'test-pass' });
     assert.equal(result.insights.taskCount, 1);
     assert.match(result.errors.roles, /403/);
-    assert.equal(seen.length, 7);
+    assert.equal(seen.length, 11);
     assert.ok(seen.every(item => item.auth === 'Basic X1NZU1RFTTp0ZXN0LXBhc3M='));
     assert.ok(seen.every(item => item.path.startsWith('/api/admin/v2/')));
   } finally { iris.close(); }

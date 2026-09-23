@@ -17,6 +17,10 @@ const endpoints = {
   upcoming: '/v2/task/upcoming?hoursOffset=48&maxRows=500',
   manager: '/v2/task/manager',
   resources: '/v2/monitor/dashboard/system-resources',
+  systemUsage: '/v2/monitor/system-usage',
+  processes: '/v2/processes?maxRows=500',
+  audit: '/v2/security/audit/enabled',
+  journals: '/v2/journal/files?maxRows=500',
   webApps: '/v2/web-apps?maxRows=500',
   roles: '/v2/security/roles?maxRows=500'
 };
@@ -83,6 +87,10 @@ function demoCapture() {
     ],
     manager: [{ Status: 'Running' }],
     resources: [{ Name: 'Global', Seize: 12, Nseize: 6, Aseize: 4, Bseize: 1, BusySet: 0 }],
+    systemUsage: [{ AllGlobalReferences: changed ? 14500 : 12000, JournalEntries: changed ? 220 : 200, LastUpdate: '2026-09-24 04:00:00' }],
+    processes: [{ State: 'RUNW' }, { State: 'HANG' }],
+    audit: [{ Enabled: true }],
+    journals: [{ Size: 77824, CreationTime: '2026-09-24 01:00:00', Reason: 'file size limit reached' }],
     webApps: [{ Name: '/csp/user', Namespace: 'USER', Enabled: true }],
     roles: [{ Name: '%Developer', Description: 'Development role' }]
   };

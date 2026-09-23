@@ -4,6 +4,8 @@ import { analyze, diffSnapshots, projectRows } from '../lib/analysis.mjs';
 
 test('projection discards sensitive or undocumented fields', () => {
   assert.deepEqual(projectRows('webApps', [{ Name: '/sample', Namespace: 'USER', Secret: 'do-not-export' }]), [{ Name: '/sample', Namespace: 'USER' }]);
+  assert.deepEqual(projectRows('processes', [{ State: 'RUNW', Username: 'private', IPAddress: 'private' }]), [{ State: 'RUNW' }]);
+  assert.deepEqual(projectRows('audit', { Enabled: true, Secret: 'private' }), [{ Enabled: true }]);
 });
 
 test('task analysis counts suspended work and groups non-success runs', () => {

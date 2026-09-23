@@ -53,8 +53,18 @@
           <div id="failures" class="failure-list empty">No history loaded yet.</div>
         </div>
       </section>
+      <section class="panel context-panel">
+        <div class="panel-heading"><div><p class="overline">03 / INSTANCE CONTEXT</p><h2>Operational pulse</h2></div><span class="pill">READ ONLY</span></div>
+        <p class="panel-intro">A compact view of process, audit and journal metadata from the official SysAdmin API. Restricted endpoints remain visibly unavailable.</p>
+        <div class="pulse-grid" aria-label="Operational context">
+          <div><span>Processes</span><strong id="process-count">—</strong></div>
+          <div><span>Auditing</span><strong id="audit-enabled">—</strong></div>
+          <div><span>Journal files</span><strong id="journal-count">—</strong></div>
+          <div><span>Global references</span><strong id="global-references">—</strong></div>
+        </div>
+      </section>
       <section class="panel compare-panel">
-        <div class="panel-heading"><div><p class="overline">03 / CHANGE REVIEW</p><h2>Between two moments</h2></div><span id="change-count" class="change-count">— changes</span></div>
+        <div class="panel-heading"><div><p class="overline">04 / CHANGE REVIEW</p><h2>Between two moments</h2></div><span id="change-count" class="change-count">— changes</span></div>
         <p class="panel-intro">Keep a baseline in this browser tab, capture again, and review changes to tasks, upcoming runs, web applications, and roles.</p>
         <div class="inventory" aria-label="Instance context"><div><strong id="webapp-count">—</strong><span>Web applications</span></div><div><strong id="role-count">—</strong><span>Roles</span></div><div><strong id="resource-count">—</strong><span>Resource groups</span></div></div>
         <div class="compare-actions">

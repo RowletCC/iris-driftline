@@ -85,6 +85,10 @@ function renderSnapshot(snapshot) {
   field('suspended-count', snapshot.insights?.suspendedCount ?? '—');
   field('upcoming-count', snapshot.insights?.upcomingCount ?? '—');
   field('failure-count', snapshot.insights?.failureCount ?? '—');
+  field('process-count', snapshot.insights?.processCount ?? '—');
+  field('audit-enabled', snapshot.insights?.auditEnabled == null ? '—' : snapshot.insights.auditEnabled ? 'On' : 'Off');
+  field('journal-count', snapshot.insights?.journalCount ?? '—');
+  field('global-references', snapshot.data.systemUsage?.[0]?.AllGlobalReferences?.toLocaleString() ?? '—');
   field('webapp-count', snapshot.data.webApps?.length ?? '—');
   field('role-count', snapshot.data.roles?.length ?? '—');
   field('resource-count', snapshot.data.resources?.length ?? '—');
