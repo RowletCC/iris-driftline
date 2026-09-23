@@ -48,6 +48,43 @@ function renderFailures(rows) {
   }
 }
 
+function renderSurfaces(data) {
+  const host = $('surfaces'); clear(host);
+  for (const [label, rows, format] of [
+    ['WEB APPS', data.webApps, row => `${row.Name || 'Unnamed app'} · ${row.Namespace || 'namespace unknown'} · ${row.Enabled === false ? 'disabled' : 'enabled/unknown'}`],
+    ['ROLES', data.roles, row => row.Name || 'Unnamed role']
+  ]) {
+    host.append(elem('div', 'context-list-label', label));
+    if (!rows) host.append(elem('div', 'context-row muted', 'Endpoint unavailable for this account.'));
+    else if (!rows.length) host.append(elem('div', 'context-row muted', 'No rows returned.'));
+    else {
+      for (const row of rows.slice(0, 5)) host.append(elem('div', 'context-row', format(row)));
+      if (rows.length > 5) host.append(elem('div', 'context-row muted', `${rows.length - 5} more in exported capture.`));
+    }
+  }
+}
+
+function renderEvidence(data, insights) {
+  const host = $('evidence'); clear(host);
+  field('audit-loss', insights?.auditLossCount == null ? '— lost' : `${insights.auditLossCount} lost`);
+  host.append(elem('div', 'context-list-label', 'AUDIT EVENTS'));
+  if (!data.auditEvents) host.append(elem('div', 'context-row muted', 'Endpoint unavailable for this account.'));
+  else if (!data.auditEvents.length) host.append(elem('div', 'context-row muted', 'No event definitions returned.'));
+  else {
+    for (const row of [...data.auditEvents].sort((a, b) => (Number(b.Lost) || 0) - (Number(a.Lost) || 0)).slice(0, 4)) {
+      host.append(elem('div', 'context-row', `${row.EventName || 'Unnamed event'} · ${row.Lost ?? '—'} lost`));
+    }
+    if (data.auditEvents.length > 4) host.append(elem('div', 'context-row muted', `${data.auditEvents.length - 4} more in exported capture.`));
+  }
+  host.append(elem('div', 'context-list-label', 'JOURNAL FILES'));
+  if (!data.journals) host.append(elem('div', 'context-row muted', 'Endpoint unavailable for this account.'));
+  else if (!data.journals.length) host.append(elem('div', 'context-row muted', 'No files returned.'));
+  else {
+    const recent = [...data.journals].sort((a, b) => String(b.CreationTime || '').localeCompare(String(a.CreationTime || '')))[0];
+    host.append(elem('div', 'context-row', `Latest created ${prettyDate(recent.CreationTime)} · ${Number(recent.Size || 0).toLocaleString()} bytes`));
+  }
+}
+
 async function renderDiff() {
   const host = $('changes'); clear(host);
   if (!baseline || !current) { host.classList.add('empty'); host.textContent = 'The change review will appear after two captures.'; field('change-count', '— changes'); return; }
@@ -95,6 +132,8 @@ function renderSnapshot(snapshot) {
   field('manager-status', `Manager ${snapshot.data.manager?.[0]?.Status || 'unavailable'}`);
   renderSchedule(snapshot.data.upcoming);
   renderFailures(snapshot.insights?.hotTasks);
+  renderSurfaces(snapshot.data);
+  renderEvidence(snapshot.data, snapshot.insights);
   $('baseline').disabled = false; $('export').disabled = false;
   renderDiff();
   if (isDemo) toast('Synthetic demo state loaded.');

@@ -20,6 +20,7 @@ const endpoints = {
   systemUsage: '/v2/monitor/system-usage',
   processes: '/v2/processes?maxRows=500',
   audit: '/v2/security/audit/enabled',
+  auditEvents: '/v2/security/audit/events?maxRows=500',
   journals: '/v2/journal/files?maxRows=500',
   webApps: '/v2/web-apps?maxRows=500',
   roles: '/v2/security/roles?maxRows=500'
@@ -90,6 +91,7 @@ function demoCapture() {
     systemUsage: [{ AllGlobalReferences: changed ? 14500 : 12000, JournalEntries: changed ? 220 : 200, LastUpdate: '2026-09-24 04:00:00' }],
     processes: [{ State: 'RUNW' }, { State: 'HANG' }],
     audit: [{ Enabled: true }],
+    auditEvents: [{ EventName: '%System/Startup', Enabled: true, Total: changed ? 14 : 12, Written: changed ? 14 : 12, Lost: 0 }],
     journals: [{ Size: 77824, CreationTime: '2026-09-24 01:00:00', Reason: 'file size limit reached' }],
     webApps: [{ Name: '/csp/user', Namespace: 'USER', Enabled: true }],
     roles: [{ Name: '%Developer', Description: 'Development role' }]
