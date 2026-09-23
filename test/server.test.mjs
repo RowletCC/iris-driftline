@@ -22,6 +22,17 @@ test('capture reads official paths with Basic auth and isolates forbidden endpoi
   } finally { iris.close(); }
 });
 
+test('capture fails clearly when every IRIS endpoint rejects credentials', async () => {
+  const iris = http.createServer((_req, res) => { res.writeHead(401); res.end('Unauthorized'); }).listen(0, '127.0.0.1');
+  await new Promise(resolve => iris.once('listening', resolve));
+  try {
+    await assert.rejects(
+      capture({ target: `http://127.0.0.1:${iris.address().port}`, user: '_SYSTEM', password: 'wrong-pass' }),
+      /No IRIS endpoint responded/
+    );
+  } finally { iris.close(); }
+});
+
 test('public server serves UI and rejects unknown URLs', async () => {
   const server = createServer().listen(0, '127.0.0.1');
   await new Promise(resolve => server.once('listening', resolve));
